@@ -19,7 +19,7 @@ export default async function LoggedInLayout({
           <SignOut />
         </div>
       </StickyHeader>
-      <main className="container max-w-2xl flex flex-col gap-8">
+      <main className="container flex flex-col gap-8">
         <ConvexClientProvider session={session}>
           {children}
         </ConvexClientProvider>
