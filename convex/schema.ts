@@ -4,6 +4,8 @@ import { Validator, v } from "convex/values";
 // The users, accounts, sessions and verificationTokens tables are modeled
 // from https://authjs.dev/getting-started/adapters#models
 
+export const spacesSchema = {};
+
 export const userSchema = {
   email: v.string(),
   name: v.optional(v.string()),
@@ -23,7 +25,7 @@ export const accountSchema = {
     v.literal("email"),
     v.literal("oidc"),
     v.literal("oauth"),
-    v.literal("webauthn"),
+    v.literal("webauthn")
   ),
   provider: v.string(),
   providerAccountId: v.string(),
@@ -62,16 +64,25 @@ const authTables = {
   ]),
   verificationTokens: defineTable(verificationTokenSchema).index(
     "identifierToken",
-    ["identifier", "token"],
+    ["identifier", "token"]
   ),
   authenticators: defineTable(authenticatorSchema)
     .index("userId", ["userId"])
     .index("credentialID", ["credentialID"]),
 };
 
-export default defineSchema({
-  ...authTables,
-  numbers: defineTable({
-    value: v.number(),
-  }),
-});
+export default defineSchema(
+  {
+    ...authTables,
+    numbers: defineTable({
+      value: v.number(),
+    }),
+    spaces: defineTable({
+      capacity: v.float64(),
+      name: v.string(),
+    }),
+  },
+  {
+    schemaValidation: false,
+  }
+);

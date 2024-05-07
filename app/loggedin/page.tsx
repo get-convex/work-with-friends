@@ -14,6 +14,11 @@ export default function LoggedInHome() {
     }) ?? {};
   const addNumber = useMutation(api.myFunctions.addNumber);
 
+  const { spaceOwner, spaces } =
+    useQuery(api.spaces.listSpaces, {
+      count: 10,
+    }) ?? {};
+
   if (viewer === undefined || numbers === undefined) {
     return (
       <>
@@ -45,6 +50,12 @@ export default function LoggedInHome() {
         {numbers?.length === 0
           ? "Click the button!"
           : numbers?.join(", ") ?? "..."}
+      </p>
+      <p>
+        Spaces:{" "}
+        {spaces?.length === 0
+          ? "Space available"
+          : spaces?.map((space) => space.name) ?? "..."}
       </p>
       <p>
         <Link href="/loggedin/preloaded">
